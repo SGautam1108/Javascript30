@@ -1,31 +1,43 @@
 var hourHand = document.querySelector(".hour-hand"),
 minHand = document.querySelector(".min-hand"),
-secHand = document.querySelector(".second-hand");
+secHand = document.querySelector(".second-hand"),
+hands = document.querySelectorAll(".hand");
 
-function calcDegrees(x, y){
-    return ((x/y)*360) % 360;
+
+function calcRatio(x, y){
+    return (x/y);
 }
 
 function rotateDeg(degrees){
     return `rotate(${degrees}deg)`;
 }
-
-function setDate(){
-    var currDate = new Date(),
+function setClock(){
+    var currDate =  new Date(),
     currHour = currDate.getHours(),
     currMin = currDate.getMinutes(),
     currSec = currDate.getSeconds();
     
     currHour = currHour % 12;
-    if(currHour === 0) currHour = 12;
 
-    var currSecDegrees = calcDegrees(currSec, 60),
-    currMinDegrees = calcDegrees(currMin, 60),
-    currHourDegrees = calcDegrees(currHour, 12);
+    var currSecRatio = calcRatio(currSec, 60),
+    currMinRatio = calcRatio(currMin + currSecRatio, 60) ,
+    currHourRatio = calcRatio(currHour + currMinRatio, 12);
 
-    hourHand.style.transform = rotateDeg(currHourDegrees);
-    minHand.style.transform = rotateDeg(currMinDegrees);
-    secHand.style.transform = rotateDeg(currSecDegrees);
+    if(currSecRatio == 0){
+        
+        hands.forEach(hand=>{
+            hand.classList.add("no-transition");
+
+            setTimeout(() => {
+                hand.classList.remove("no-transition");
+            }, 100);
+        })
+        
+    }
+
+    hourHand.style.transform = rotateDeg(currHourRatio * 360);
+    minHand.style.transform = rotateDeg(currMinRatio * 360);
+    secHand.style.transform = rotateDeg(currSecRatio * 360);
 }
 
-setInterval(setDate, 1000);
+setInterval(setClock, 1000);

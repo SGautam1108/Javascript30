@@ -1,0 +1,50 @@
+/* Set variables for color, spacing and blur for different elements */
+
+:root{
+    --base: #ffc600;
+    --spacing: 1rem;
+    --blur: 0px;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 50px;
+  }
+
+  .img-container{
+    margin-inline: auto;
+    width: 50%;
+  }
+
+  img{
+    box-sizing: border-box;
+    max-width: 100%;
+    background: var(--base);
+    padding: var(--spacing);
+    filter: blur(var(--blur));
+  }
+
+  .hl{
+    color: var(--base);
+  }
+
+  /*
+    misc styles, nothing to do with CSS variables
+  */
+
+  body {
+    text-align: center;
+    background: #193549;
+    color: white;
+    font-family: 'helvetica neue', sans-serif;
+    font-weight: 100;
+    font-size: 50px;
+  }
+
+  input {
+    margin-inline: 5px;
+    width: 100px;
+  }
